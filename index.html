@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elevate Performance Therapy — Concierge Physical Therapy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12181B;
+    --panel:#1A2226;
+    --panel-2:#212B30;
+    --bone:#EDE6D8;
+    --bone-dim:#B9B2A4;
+    --clay:#3B7CB4;
+    --steel:#8FAFC7;
+    --line: rgba(237,230,216,0.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{ background:var(--clay); color:var(--bone); }
+  a{color:inherit;}
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--steel);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:16px; height:1px;
+    background:var(--steel);
+    display:inline-block;
+  }
+  h1,h2,h3{ font-family:'Fraunces',serif; font-weight:500; letter-spacing:-0.01em; }
+  .btn{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    padding:14px 26px;
+    border-radius:2px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+    text-decoration:none;
+    transition:all .25s ease;
+    border:1px solid transparent;
+  }
+  .btn-primary{ background:var(--clay); color:var(--bone); }
+  .btn-primary:hover{ background:#2E6693; transform:translateY(-1px); }
+  .btn-ghost{ border-color:var(--line); color:var(--bone); }
+  .btn-ghost:hover{ border-color:var(--bone-dim); background:rgba(237,230,216,0.04); }
+
+  /* NAV */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(18,24,27,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; height:78px; }
+  .logo{ font-family:'Fraunces',serif; font-size:19px; font-weight:600; letter-spacing:-0.01em; }
+  .logo span{ color:var(--clay); }
+  .navlinks{ display:flex; align-items:center; gap:34px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase; }
+  .navlinks a{ text-decoration:none; color:var(--bone-dim); transition:color .2s; }
+  .navlinks a:hover{ color:var(--bone); }
+  .nav-cta{ display:flex; align-items:center; gap:24px; }
+  .menu-btn{ display:none; background:none; border:none; color:var(--bone); font-size:22px; cursor:pointer; }
+
+  /* HERO */
+  header.hero{
+    position:relative;
+    padding:168px 0 100px;
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  header.hero::before{
+    content:'';
+    position:absolute; inset:0;
+    background:
+      radial-gradient(600px 300px at 82% 10%, rgba(127,160,179,0.13), transparent 70%),
+      radial-gradient(500px 260px at 10% 90%, rgba(59,124,180,0.12), transparent 70%);
+    pointer-events:none;
+  }
+  .hero-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:60px; align-items:center; position:relative; }
+  .hero h1{
+    font-size:clamp(40px,5.4vw,72px);
+    line-height:1.03;
+    margin:22px 0 26px;
+  }
+  .hero h1 em{ font-style:italic; color:var(--steel); }
+  .hero p.lead{ font-size:18px; color:var(--bone-dim); max-width:520px; margin-bottom:38px; }
+  .hero-actions{ display:flex; gap:16px; margin-bottom:56px; flex-wrap:wrap; }
+  .readout{
+    display:flex; gap:0; border-top:1px solid var(--line); max-width:560px;
+  }
+  .readout div{ flex:1; padding:16px 0; border-right:1px solid var(--line); }
+  .readout div:last-child{ border-right:none; }
+  .readout .num{ font-family:'IBM Plex Mono',monospace; font-size:22px; color:var(--bone); }
+  .readout .lbl{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--bone-dim); margin-top:4px; }
+
+  /* signature: body map */
+  .bodymap-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:28px;
+    position:relative;
+  }
+  .bodymap-card .cap{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--bone-dim);
+    display:flex; justify-content:space-between; margin-bottom:18px;
+  }
+  svg#bodysvg{ width:100%; height:auto; display:block; }
+  .zone{ fill:transparent; stroke:var(--steel); stroke-width:1.4; opacity:0.35; transition:all .35s ease; }
+  .zone.active{ fill:rgba(59,124,180,0.24); stroke:var(--clay); opacity:1; }
+  .zone-dot{ fill:var(--bone-dim); opacity:.5; transition:all .35s ease;}
+  .zone-dot.active{ fill:var(--clay); opacity:1; }
+  .silhouette{ fill:none; stroke:var(--bone-dim); stroke-width:1; opacity:.55; }
+
+  /* SECTIONS */
+  section{ padding:104px 0; border-bottom:1px solid var(--line); }
+  .section-head{ max-width:640px; margin-bottom:56px; }
+  .section-head h2{ font-size:clamp(30px,3.4vw,44px); margin-top:16px; }
+  .section-head p{ color:var(--bone-dim); margin-top:16px; font-size:16px; }
+
+  /* SERVICES */
+  .service-tabs{ display:flex; gap:10px; margin-bottom:40px; flex-wrap:wrap; }
+  .tab{
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:0.05em; text-transform:uppercase;
+    padding:11px 18px; border:1px solid var(--line); border-radius:2px; cursor:pointer; color:var(--bone-dim);
+    background:transparent; transition:all .2s;
+  }
+  .tab.active{ border-color:var(--clay); color:var(--bone); background:rgba(59,124,180,0.12); }
+  .services-layout{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; }
+  .service-panel{ display:none; }
+  .service-panel.active{ display:block; }
+  .service-panel .tag{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--clay); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:14px; }
+  .service-panel h3{ font-size:30px; margin-bottom:16px; }
+  .service-panel p{ color:var(--bone-dim); margin-bottom:18px; }
+  .service-panel ul{ list-style:none; }
+  .service-panel li{ font-size:14.5px; color:var(--bone); padding:11px 0; border-top:1px solid var(--line); display:flex; gap:12px; }
+  .service-panel li:last-child{ border-bottom:1px solid var(--line); }
+  .service-panel li::before{ content:'—'; color:var(--steel); }
+
+  /* APPROACH / PROCESS */
+  .process{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .process .step{ background:var(--ink); padding:38px 32px; }
+  .process .step .idx{ font-family:'IBM Plex Mono',monospace; color:var(--steel); font-size:13px; margin-bottom:20px; }
+  .process .step h3{ font-size:21px; margin-bottom:12px; font-weight:500; }
+  .process .step p{ color:var(--bone-dim); font-size:14.5px; }
+
+  /* WHO ITS FOR */
+  .split{ display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+  .checklist{ list-style:none; }
+  .checklist li{ padding:16px 0; border-top:1px solid var(--line); font-size:15.5px; display:flex; gap:14px; }
+  .checklist li:last-child{ border-bottom:1px solid var(--line); }
+  .checklist .mark{ font-family:'IBM Plex Mono',monospace; color:var(--clay); flex-shrink:0; }
+
+  /* ABOUT */
+  .about-layout{ display:grid; grid-template-columns:0.8fr 1.2fr; gap:60px; align-items:center; }
+  .about-photo{
+    aspect-ratio:4/5; background:linear-gradient(160deg,var(--panel),var(--panel-2));
+    border:1px solid var(--line); border-radius:4px; position:relative; overflow:hidden;
+  }
+  .about-photo::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(0deg, rgba(18,24,27,0.85) 0%, rgba(18,24,27,0.05) 40%, transparent 65%);
+  }
+  .about-photo::after{
+    content:'REILLY KUCKO, DPT · FORMER D1 SOCCER ATHLETE';
+    position:absolute; bottom:20px; left:20px; right:20px;
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.06em; color:var(--bone);
+  }
+  .about-copy p{ color:var(--bone-dim); margin-bottom:16px; font-size:16px; }
+  .about-copy p:first-child{ color:var(--bone); font-size:19px; font-family:'Fraunces',serif; font-style:italic; font-weight:500; line-height:1.4; }
+
+  /* CONTACT */
+  .contact-layout{ display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+  .field{ margin-bottom:20px; }
+  .field label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--bone-dim); margin-bottom:8px; }
+  .field input, .field textarea, .field select{
+    width:100%; background:var(--panel); border:1px solid var(--line); color:var(--bone);
+    padding:13px 14px; font-family:'Inter',sans-serif; font-size:14.5px; border-radius:2px;
+  }
+  .field textarea{ resize:vertical; min-height:100px; }
+  .field input:focus, .field textarea:focus, .field select:focus{ outline:none; border-color:var(--steel); }
+  .contact-info .row{ display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid var(--line); font-size:14.5px; }
+  .contact-info .row:last-child{ border-bottom:1px solid var(--line); }
+  .contact-info .row span:first-child{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--bone-dim); }
+
+  footer{ padding:40px 0; }
+  footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  footer .fine{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--bone-dim); letter-spacing:0.03em; }
+
+  @media (max-width:860px){
+    .navlinks{ display:none; }
+    .hero-grid, .services-layout, .split, .about-layout, .contact-layout{ grid-template-columns:1fr; }
+    .process{ grid-template-columns:1fr; }
+    .readout{ flex-wrap:wrap; }
+    .readout div{ flex:1 1 50%; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo" style="display:flex; align-items:center; background:var(--bone); padding:6px 12px; border-radius:3px;"><img src="elevate-logo.jpeg" alt="Elevate Performance Therapy" style="height:44px; width:auto; display:block;"></a>
+    <div class="navlinks">
+      <a href="#services">Services</a>
+      <a href="#approach">Approach</a>
+      <a href="#for-you">Who It's For</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary">Book a Consult</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Concierge Physical Therapy · Nashville, TN</div>
+      <h1>Recovery, built<br>around <em>your</em> schedule —<br>not a waiting room.</h1>
+      <p class="lead">Elevate Performance Therapy brings dry needling, cupping, and hands-on manual therapy directly to you — one-on-one, unhurried, and built around how you move and train.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Book a Consult →</a>
+        <a href="#services" class="btn btn-ghost">Explore Treatments</a>
+      </div>
+      <div class="readout">
+        <div><div class="num">60 min</div><div class="lbl">Session Length</div></div>
+        <div><div class="num">1:1</div><div class="lbl">Practitioner Ratio</div></div>
+        <div><div class="num">In-Home</div><div class="lbl">Or In-Studio</div></div>
+        <div><div class="num">No Min.</div><div class="lbl">Commitment Required</div></div>
+      </div>
+    </div>
+
+    <div class="bodymap-card">
+      <div class="cap"><span>Treatment Map</span><span id="mapLabel">Manual Therapy</span></div>
+      <svg id="bodysvg" viewBox="0 0 220 380" xmlns="http://www.w3.org/2000/svg">
+        <!-- simple silhouette -->
+        <g class="silhouette">
+          <circle cx="110" cy="34" r="20"/>
+          <path d="M110 54 L110 150"/>
+          <path d="M110 70 Q60 80 42 150"/>
+          <path d="M110 70 Q160 80 178 150"/>
+          <path d="M42 150 L36 210"/>
+          <path d="M178 150 L184 210"/>
+          <path d="M70 150 L70 260 L60 360"/>
+          <path d="M150 150 L150 260 L160 360"/>
+          <path d="M70 150 Q110 165 150 150"/>
+        </g>
+        <!-- dry needling zones (traps/calves) -->
+        <g id="zone-needling">
+          <circle class="zone-dot" cx="88" cy="82" r="4"/>
+          <circle class="zone-dot" cx="132" cy="82" r="4"/>
+          <circle class="zone-dot" cx="63" cy="320" r="4"/>
+          <circle class="zone-dot" cx="157" cy="320" r="4"/>
+        </g>
+        <!-- cupping zones (lats/quads) -->
+        <g id="zone-cupping">
+          <ellipse class="zone" cx="90" cy="180" rx="16" ry="10"/>
+          <ellipse class="zone" cx="130" cy="180" rx="16" ry="10"/>
+          <ellipse class="zone" cx="72" cy="270" rx="12" ry="18"/>
+          <ellipse class="zone" cx="148" cy="270" rx="12" ry="18"/>
+        </g>
+        <!-- manual therapy zones (joints) -->
+        <g id="zone-manual">
+          <circle class="zone" cx="110" cy="150" r="12"/>
+          <circle class="zone" cx="70" cy="255" r="10"/>
+          <circle class="zone" cx="150" cy="255" r="10"/>
+          <circle class="zone" cx="42" cy="150" r="9"/>
+          <circle class="zone" cx="178" cy="150" r="9"/>
+        </g>
+      </svg>
+      <div class="cap" style="margin-bottom:0; margin-top:14px; opacity:.7;">
+        <span id="mapDesc">Joint mobilization &amp; soft-tissue work at the shoulders, hips, and knees.</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">What I Treat With</div>
+      <h2>Three tools. One goal: get you moving without pain.</h2>
+      <p>Every session is built from the same core toolkit, applied differently depending on what your body needs that day.</p>
+    </div>
+
+    <div class="service-tabs">
+      <button class="tab active" data-tab="manual">Manual Therapy</button>
+      <button class="tab" data-tab="needling">Dry Needling</button>
+      <button class="tab" data-tab="cupping">Cupping</button>
+    </div>
+
+    <div class="services-layout">
+      <div>
+        <div class="service-panel active" id="panel-manual">
+          <div class="tag">Modality — Hands-On</div>
+          <h3>Manual Therapy</h3>
+          <p>Joint mobilization, soft-tissue work, and guided stretching to restore range of motion and quiet down irritated tissue — no two sessions follow the same script.</p>
+          <ul>
+            <li>Joint mobilization &amp; manipulation</li>
+            <li>Myofascial release</li>
+            <li>Assisted stretching &amp; PNF techniques</li>
+            <li>Post-treatment movement retraining</li>
+          </ul>
+        </div>
+        <div class="service-panel" id="panel-needling">
+          <div class="tag">Modality — Trigger Point</div>
+          <h3>Dry Needling</h3>
+          <p>Thin filament needles placed directly into tight, overactive muscle to release trigger points, reduce guarding, and speed up recovery between training blocks.</p>
+          <ul>
+            <li>Targeted trigger-point release</li>
+            <li>Reduced muscle guarding &amp; tension</li>
+            <li>Often paired with manual therapy same-session</li>
+            <li>Single-use, sterile needles</li>
+          </ul>
+        </div>
+        <div class="service-panel" id="panel-cupping">
+          <div class="tag">Modality — Myofascial Decompression</div>
+          <h3>Cupping</h3>
+          <p>Negative-pressure cups lift and decompress fascia and muscle, improving local blood flow and mobility — a strong complement to manual work on chronically tight areas.</p>
+          <ul>
+            <li>Static &amp; dynamic (gliding) cupping</li>
+            <li>Improved tissue mobility &amp; circulation</li>
+            <li>Well-suited to lats, quads &amp; calves</li>
+            <li>Often used pre- or post-training</li>
+          </ul>
+        </div>
+      </div>
+      <div style="align-self:center;">
+        <p style="color:var(--bone-dim); font-size:15px;">Not sure which combination fits your body? That's exactly what the first consult is for — I build the plan around your goals, not a fixed protocol.</p>
+        <a href="#contact" class="btn btn-ghost" style="margin-top:20px;">Ask About Your Case</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="approach">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">How Concierge Care Works</div>
+      <h2>From first message to feeling better, in three steps.</h2>
+    </div>
+    <div class="process">
+      <div class="step">
+        <div class="idx">01 / Consult</div>
+        <h3>Tell me what's going on</h3>
+        <p>A short call or message to understand your history, goals, and where you're feeling limited — I'll tell you honestly whether concierge PT is the right fit.</p>
+      </div>
+      <div class="step">
+        <div class="idx">02 / Assessment</div>
+        <h3>In-person evaluation</h3>
+        <p>A full movement and tissue assessment at your home, gym, or my studio, followed by a plan built around your specific findings — not a generic protocol.</p>
+      </div>
+      <div class="step">
+        <div class="idx">03 / Sessions</div>
+        <h3>Hands-on treatment</h3>
+        <p>Focused 60-minute sessions combining manual therapy, dry needling, and cupping as needed, with clear checkpoints so you know it's working. No packages, no minimum commitment — book what you need, when you need it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="for-you">
+  <div class="wrap split">
+    <div>
+      <div class="eyebrow">Who This Is For</div>
+      <h2 style="margin-top:16px; font-size:clamp(28px,3vw,38px);">Built for people who train hard and can't afford downtime.</h2>
+      <p style="color:var(--bone-dim); margin-top:16px;">This isn't a volume clinic. Sessions are unhurried, one-on-one, and scheduled around your training and work — not the other way around.</p>
+    </div>
+    <ul class="checklist">
+      <li><span class="mark">→</span> Athletes managing recurring tightness, strains, or nagging joint pain</li>
+      <li><span class="mark">→</span> Busy professionals who can't fit a clinic's schedule into theirs</li>
+      <li><span class="mark">→</span> Post-rehab clients who outgrew standard PT and want a higher level of care</li>
+      <li><span class="mark">→</span> Anyone who wants a plan built for their body, not a generic protocol</li>
+    </ul>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-layout">
+    <div class="about-photo" style="background-image:url('reilly-photo.jpeg'); background-size:cover; background-position:center 20%;"></div>
+    <div class="about-copy">
+      <div class="eyebrow">About Reilly Kucko, DPT</div>
+      <p style="margin-top:16px;">"I started Elevate Performance Therapy because the best care I ever gave happened when I had time to actually think — not when I was double-booked."</p>
+      <p>I'm Reilly Kucko, a Doctor of Physical Therapy and former Division 1 soccer player. Four years of college athletics taught me what it actually takes to compete through nagging injuries, tight timelines, and a body that has to perform on demand — and that's the lens I bring to every session.</p>
+      <p>Elevate Performance Therapy is a concierge physical therapy practice offering dry needling, cupping, and manual therapy — delivered one-on-one, on your schedule, wherever you need it most. Every plan starts from a real assessment, not a template, and there's never a package to buy or a minimum number of sessions to commit to.</p>
+      <a href="#contact" class="btn btn-ghost" style="margin-top:8px;">Get In Touch</a>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="border-bottom:none;">
+  <div class="wrap contact-layout">
+    <div>
+      <div class="eyebrow">Book a Consult</div>
+      <h2 style="margin-top:16px; font-size:clamp(28px,3vw,38px); margin-bottom:24px;">Let's talk about what's going on.</h2>
+      <form action="mailto:reillykucko@gmail.com" method="post" enctype="text/plain" onsubmit="this.querySelector('.submit-note').style.display='block';">
+        <div class="field">
+          <label>Name</label>
+          <input type="text" name="Name" placeholder="Your full name" required>
+        </div>
+        <div class="field">
+          <label>Email or Phone</label>
+          <input type="text" name="Contact" placeholder="Best way to reach you" required>
+        </div>
+        <div class="field">
+          <label>What's going on?</label>
+          <textarea name="Message" placeholder="Briefly describe the injury, goal, or reason for reaching out"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Request Consult →</button>
+        <p class="submit-note" style="display:none; margin-top:14px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--steel);">This will open your email app to send the request. For a fully in-page form, connect a form service or booking tool later.</p>
+      </form>
+    </div>
+    <div class="contact-info">
+      <div class="eyebrow" style="margin-bottom:16px;">Details</div>
+      <div class="row"><span>Practice</span><span>Elevate Performance Therapy</span></div>
+      <div class="row"><span>Entity</span><span>Elevate Performance LLC</span></div>
+      <div class="row"><span>Service Area</span><span>Nashville, TN &amp; surrounding areas</span></div>
+      <div class="row"><span>Hours</span><span>By appointment</span></div>
+      <div class="row"><span>Commitment</span><span>None — no packages, no minimums</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fine">© 2026 Elevate Performance LLC. All rights reserved.</div>
+    <div class="fine">Dry Needling · Cupping · Manual Therapy</div>
+  </div>
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const panels = { manual: document.getElementById('panel-manual'), needling: document.getElementById('panel-needling'), cupping: document.getElementById('panel-cupping') };
+  const zones = { manual: document.getElementById('zone-manual'), needling: document.getElementById('zone-needling'), cupping: document.getElementById('zone-cupping') };
+  const mapLabel = document.getElementById('mapLabel');
+  const mapDesc = document.getElementById('mapDesc');
+  const labels = { manual: 'Manual Therapy', needling: 'Dry Needling', cupping: 'Cupping' };
+  const descs = {
+    manual: 'Joint mobilization & soft-tissue work at the shoulders, hips, and knees.',
+    needling: 'Trigger-point release at the traps, calves, and other overactive muscle.',
+    cupping: 'Myofascial decompression across the lats, quads, and calves.'
+  };
+
+  function setActive(key){
+    tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === key));
+    Object.entries(panels).forEach(([k,el]) => el.classList.toggle('active', k===key));
+    Object.entries(zones).forEach(([k,el]) => {
+      el.querySelectorAll('.zone, .zone-dot').forEach(z => z.classList.toggle('active', k===key));
+    });
+    mapLabel.textContent = labels[key];
+    mapDesc.textContent = descs[key];
+  }
+
+  tabs.forEach(t => t.addEventListener('click', () => setActive(t.dataset.tab)));
+  setActive('manual');
+</script>
+
+</body>
+</html>
