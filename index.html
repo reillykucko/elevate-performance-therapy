@@ -111,7 +111,7 @@
   .readout{
     display:flex; gap:0; border-top:1px solid var(--line); max-width:560px;
   }
-  .readout div{ flex:1; padding:16px 0; border-right:1px solid var(--line); }
+  .readout div{ flex:1; padding:16px 0; border-right:1px solid var(--line); text-align:center; }
   .readout div:last-child{ border-right:none; }
   .readout .num{ font-family:'IBM Plex Mono',monospace; font-size:22px; color:var(--bone); }
   .readout .lbl{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--bone-dim); margin-top:4px; }
@@ -128,6 +128,8 @@
     font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--bone-dim);
     display:flex; justify-content:space-between; margin-bottom:18px;
   }
+  .hero-photo-card{ padding:18px; }
+  .hero-photo-card img{ width:100%; aspect-ratio:4/5; object-fit:cover; object-position:center 46%; display:block; border-radius:2px; }
   svg#bodysvg{ width:100%; height:auto; display:block; }
   .zone{ fill:transparent; stroke:var(--steel); stroke-width:1.4; opacity:0.35; transition:all .35s ease; }
   .zone.active{ fill:rgba(59,124,180,0.24); stroke:var(--clay); opacity:1; }
@@ -184,11 +186,7 @@
     content:''; position:absolute; inset:0;
     background:linear-gradient(0deg, rgba(18,24,27,0.85) 0%, rgba(18,24,27,0.05) 40%, transparent 65%);
   }
-  .about-photo::after{
-    content:'REILLY KUCKO, DPT · FORMER D1 SOCCER ATHLETE';
-    position:absolute; bottom:20px; left:20px; right:20px;
-    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.06em; color:var(--bone);
-  }
+  .about-photo::after{ display:none; }
   .about-copy p{ color:var(--bone-dim); margin-bottom:16px; font-size:16px; }
   .about-copy p:first-child{ color:var(--bone); font-size:19px; font-family:'Fraunces',serif; font-style:italic; font-weight:500; line-height:1.4; }
 
@@ -259,47 +257,8 @@
       </div>
     </div>
 
-    <div class="bodymap-card">
-      <div class="cap"><span>Treatment Map</span><span id="mapLabel">Manual Therapy</span></div>
-      <svg id="bodysvg" viewBox="0 0 220 380" xmlns="http://www.w3.org/2000/svg">
-        <!-- simple silhouette -->
-        <g class="silhouette">
-          <circle cx="110" cy="34" r="20"/>
-          <path d="M110 54 L110 150"/>
-          <path d="M110 70 Q60 80 42 150"/>
-          <path d="M110 70 Q160 80 178 150"/>
-          <path d="M42 150 L36 210"/>
-          <path d="M178 150 L184 210"/>
-          <path d="M70 150 L70 260 L60 360"/>
-          <path d="M150 150 L150 260 L160 360"/>
-          <path d="M70 150 Q110 165 150 150"/>
-        </g>
-        <!-- dry needling zones (traps/calves) -->
-        <g id="zone-needling">
-          <circle class="zone-dot" cx="88" cy="82" r="4"/>
-          <circle class="zone-dot" cx="132" cy="82" r="4"/>
-          <circle class="zone-dot" cx="63" cy="320" r="4"/>
-          <circle class="zone-dot" cx="157" cy="320" r="4"/>
-        </g>
-        <!-- cupping zones (lats/quads) -->
-        <g id="zone-cupping">
-          <ellipse class="zone" cx="90" cy="180" rx="16" ry="10"/>
-          <ellipse class="zone" cx="130" cy="180" rx="16" ry="10"/>
-          <ellipse class="zone" cx="72" cy="270" rx="12" ry="18"/>
-          <ellipse class="zone" cx="148" cy="270" rx="12" ry="18"/>
-        </g>
-        <!-- manual therapy zones (joints) -->
-        <g id="zone-manual">
-          <circle class="zone" cx="110" cy="150" r="12"/>
-          <circle class="zone" cx="70" cy="255" r="10"/>
-          <circle class="zone" cx="150" cy="255" r="10"/>
-          <circle class="zone" cx="42" cy="150" r="9"/>
-          <circle class="zone" cx="178" cy="150" r="9"/>
-        </g>
-      </svg>
-      <div class="cap" style="margin-bottom:0; margin-top:14px; opacity:.7;">
-        <span id="mapDesc">Joint mobilization &amp; soft-tissue work at the shoulders, hips, and knees.</span>
-      </div>
+    <div class="bodymap-card hero-photo-card">
+      <img src="IMG_7803.jpg" alt="Athlete performing a barbell lift in a performance gym">
     </div>
   </div>
 </header>
@@ -406,7 +365,7 @@
 
 <section id="about">
   <div class="wrap about-layout">
-    <div class="about-photo" style="background-image:url('reilly-photo.jpeg'); background-size:cover; background-position:center 20%;"></div>
+    <div class="about-photo" style="background-image:url('IMG_2451.JPG'); background-size:cover; background-position:center 58%;" role="img" aria-label="Athlete training with a barbell in a performance gym"></div>
     <div class="about-copy">
       <div class="eyebrow">About Reilly Kucko, DPT</div>
       <p style="margin-top:16px;">"I started Elevate Performance Therapy because the best care I ever gave happened when I had time to actually think — not when I was double-booked."</p>
@@ -460,9 +419,9 @@
 <script>
   const tabs = document.querySelectorAll('.tab');
   const panels = { manual: document.getElementById('panel-manual'), needling: document.getElementById('panel-needling'), cupping: document.getElementById('panel-cupping') };
-  const zones = { manual: document.getElementById('zone-manual'), needling: document.getElementById('zone-needling'), cupping: document.getElementById('zone-cupping') };
-  const mapLabel = document.getElementById('mapLabel');
-  const mapDesc = document.getElementById('mapDesc');
+  const zones = {};
+  const mapLabel = null;
+  const mapDesc = null;
   const labels = { manual: 'Manual Therapy', needling: 'Dry Needling', cupping: 'Cupping' };
   const descs = {
     manual: 'Joint mobilization & soft-tissue work at the shoulders, hips, and knees.',
@@ -476,8 +435,6 @@
     Object.entries(zones).forEach(([k,el]) => {
       el.querySelectorAll('.zone, .zone-dot').forEach(z => z.classList.toggle('active', k===key));
     });
-    mapLabel.textContent = labels[key];
-    mapDesc.textContent = descs[key];
   }
 
   tabs.forEach(t => t.addEventListener('click', () => setActive(t.dataset.tab)));
